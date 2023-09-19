@@ -1,0 +1,40 @@
+{
+  "name": "docker-express-boilerplate",
+  "version": "1.0.0",
+  "description": "A Docker-node-typescript-typeorm-postgre boilerplate.",
+  "main": "index.js",
+  "author": "Alexis Le Boucher",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.6.1",
+    "@types/validator": "^13.11.1",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.28.1",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "start": "node build/index.js",
+    "dev": "yarn && nodemon -L src/index.ts --watch \"src/**/*.{ts,js}\"",
+    "build": "tsc -p tsconfig-build.json",
+    "type-check": "tsc --noEmit",
+    "lint:fix": "eslint --fix \"src/**/*.{ts,js}\"",
+    "lint": "eslint \"src/**/*.{ts,js}\"",
+    "docker:up": "docker-compose up -d && yarn docker:shell",
+    "docker:down": "docker-compose down",
+    "docker:shell": "docker exec -it api sh",
+    "docker:build": "docker build -t docker-express-boilerplate-api ."
+  }
+}

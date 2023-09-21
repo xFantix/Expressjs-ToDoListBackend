@@ -2,7 +2,7 @@ import { BOOLEAN, DATE, INTEGER, STRING } from "sequelize";
 
 import sequelize from "../config/database";
 
-const Task = sequelize.define("Task", {
+const Task = sequelize.define("task", {
   id: {
     primaryKey: true,
     type: INTEGER,

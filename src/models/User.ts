@@ -2,7 +2,7 @@ import { INTEGER, STRING } from "sequelize";
 
 import sequelize from "../config/database";
 
-const User = sequelize.define("User", {
+const User = sequelize.define("user", {
   id: {
     type: INTEGER,
     allowNull: false,

@@ -1,5 +1,7 @@
 import { Request, Response, RequestHandler, NextFunction } from "express";
 
+import createHttpError from "http-errors";
+
 import User from "../models/user";
 import {
   createUserSchema,
@@ -26,17 +28,15 @@ export const getUserById: RequestHandler = (
   });
 
   if (error) {
-    console.log(error);
-    return res.status(400).json({ message: "Invalid id" });
+    throw createHttpError(400, "Error Validation");
   }
 
   User.findByPk(value.id)
     .then((user) => {
       return res.status(200).json(user);
     })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+    .catch((error) => {
+      throw createHttpError(400, error.message);
     });
 };
 
@@ -50,17 +50,15 @@ export const addUser: RequestHandler = (
   });
 
   if (error) {
-    console.log(error);
-    return res.status(400).json({ message: "Invalid date" });
+    throw createHttpError(400, error.message);
   }
 
   User.create(value)
     .then(() => {
       res.status(201).json({ message: "'Record has been successfully added" });
     })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+    .catch((error) => {
+      throw createHttpError(400, error.message);
     });
 };
 
@@ -74,8 +72,7 @@ export const deleteUser: RequestHandler = (
     abortEarly: false,
   });
   if (error) {
-    console.log(error);
-    return res.status(400).json({ message: "Invalid id" });
+    throw createHttpError(400, error.message);
   }
 
   User.destroy({ where: { id: value.id } })
@@ -84,9 +81,8 @@ export const deleteUser: RequestHandler = (
         .status(200)
         .json({ message: "Record has been successfully deleted." });
     })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+    .catch((error) => {
+      throw createHttpError(400, error.message);
     });
 };
 
@@ -111,13 +107,11 @@ export const editUser: RequestHandler = (
   );
 
   if (errorId) {
-    console.log(errorId);
-    return res.status(400).json({ message: "Invalid id" });
+    throw createHttpError(400, errorId.message);
   }
 
   if (errorData) {
-    console.log(errorData);
-    return res.status(400).json({ message: "Invalid date" });
+    throw createHttpError(400, errorData.message);
   }
 
   User.update(data, { where: { id: paramsValue.id } })
@@ -126,8 +120,7 @@ export const editUser: RequestHandler = (
         .status(200)
         .json({ message: "Record has been successfully updated." });
     })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+    .catch((error) => {
+      throw createHttpError(400, error.message);
     });
 };

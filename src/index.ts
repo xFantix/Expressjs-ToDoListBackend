@@ -10,6 +10,7 @@ import User from "./models/user";
 import usersRoute from "./routes/uersRoute";
 
 import { errorHandler } from "./middleware/errorHandler";
+import tasksRoute from "./routes/tasksRoute";
 
 dotenv.config();
 
@@ -25,10 +26,7 @@ Task.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Task);
 
 app.use("/users", usersRoute);
-
-app.get("/*", (req, res) => {
-  throw createHttpError(404, "Resource Not Found");
-});
+app.use("/tasks", tasksRoute);
 
 app.use(errorHandler);
 

@@ -6,15 +6,16 @@ import User from "../models/user";
 import {
   createUserSchema,
   paramsUserSchema,
-} from "../validators/userValidator";
+} from "../validators/usersValidator";
 
-export const getUsers: RequestHandler = async (
+export const getUsers: RequestHandler = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const users = await User.findAll();
-  return res.status(200).json(users);
+  User.findAll().then((users) => {
+    return res.status(200).json(users);
+  });
 };
 
 export const getUserById: RequestHandler = (
@@ -58,7 +59,7 @@ export const addUser: RequestHandler = (
       res.status(201).json({ message: "'Record has been successfully added" });
     })
     .catch((error) => {
-      throw createHttpError(400, error.message);
+      next(error);
     });
 };
 
@@ -82,7 +83,7 @@ export const deleteUser: RequestHandler = (
         .json({ message: "Record has been successfully deleted." });
     })
     .catch((error) => {
-      throw createHttpError(400, error.message);
+      next(error);
     });
 };
 
@@ -121,6 +122,6 @@ export const editUser: RequestHandler = (
         .json({ message: "Record has been successfully updated." });
     })
     .catch((error) => {
-      throw createHttpError(400, error.message);
+      next(error);
     });
 };

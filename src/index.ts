@@ -1,8 +1,6 @@
 import * as dotenv from "dotenv";
 import express, { json } from "express";
 
-import createHttpError from "http-errors";
-
 import sequelize from "./config/database";
 import { testConnectingDatabase } from "./utils/databaseConnecting";
 import Task from "./models/task";

@@ -76,7 +76,9 @@ export const deleteUser: RequestHandler = (
     throw createHttpError(400, error.message);
   }
 
-  User.destroy({ where: { id: value.id } })
+  User.destroy({
+    where: { id: value.id },
+  })
     .then(() => {
       res
         .status(200)

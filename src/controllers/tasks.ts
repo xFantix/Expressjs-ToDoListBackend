@@ -76,14 +76,14 @@ export const addTask: RequestHandler = (
 
   Task.create(value)
     .then(() => {
-      res.status(201).json({ message: "'Record has been successfully added" });
+      res.status(201).json({ message: "Record has been successfully added" });
     })
     .catch((error) => {
       next(error);
     });
 };
 
-export const editUser: RequestHandler = (
+export const editTask: RequestHandler = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -116,6 +116,30 @@ export const editUser: RequestHandler = (
       res
         .status(200)
         .json({ message: "Record has been successfully updated." });
+    })
+    .catch((error) => {
+      next(error);
+    });
+};
+
+export const deleteTask: RequestHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const params = req.params;
+  const { error, value } = paramsTaskSchema.validate(params, {
+    abortEarly: false,
+  });
+  if (error) {
+    throw createHttpError(400, error.message);
+  }
+
+  Task.destroy({ where: { id: value.id } })
+    .then(() => {
+      res
+        .status(200)
+        .json({ message: "Record has been successfully deleted." });
     })
     .catch((error) => {
       next(error);

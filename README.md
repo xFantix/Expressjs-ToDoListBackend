@@ -28,27 +28,27 @@ The program is a to-do list application built using Express.js. It allows users 
 
 ### Install yarn globally
 
-```http
+```
   npm install --global yarn
 ```
 
 ### Copy .env.example file
 
-```http
+```
   on OSX run cp .env.example .env
   on Windows run copy .env.example .env
 ```
 
 ### Run server
 
-```http
+```
   yarn docker:up
   yarn dev
 ```
 
 ### Run tests
 
-```http
+```
   yarn test
 ```
 
